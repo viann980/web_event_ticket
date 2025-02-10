@@ -1,4 +1,5 @@
 import UpcomingEvent from "./UpcomingEvent";
+import Link from "next/link";
 
 export default function UpcomingEventSection() {
   return (
@@ -28,9 +29,9 @@ export default function UpcomingEventSection() {
             </span>
           </h2>
           <div className="w-full md:w-auto flex justify-start">
-            <a href="/events" className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+            <Link href="/events" className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
               Semua Event
-            </a>
+            </Link>
           </div>
         </div>
         <UpcomingEvent />
