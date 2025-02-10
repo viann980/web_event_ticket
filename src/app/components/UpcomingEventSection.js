@@ -36,7 +36,7 @@ export default function UpcomingEventSection() {
         <UpcomingEvent />
       </div>
       <img
-        src="/icon_shape.png"
+        src="https://raw.githubusercontent.com/bikinkoding/web-event/main/public/icon_shape.png"
         alt="Icon Shape"
         className="absolute bottom-[20px] right-[200px] w-24 h-auto md:left-auto md:right-[200px] left-[20px]"
       />

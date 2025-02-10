@@ -17,7 +17,7 @@ export default function MottoSection() {
           </p>
         </div>
         <div className="hidden md:block">
-          <img src="/icon_shape.png" alt="Icon Shape" className="w-24 h-auto" />
+          <img src="https://raw.githubusercontent.com/bikinkoding/web-event/main/public/icon_shape.png" alt="Icon Shape" className="w-24 h-auto" />
         </div>
       </div>
     </div>

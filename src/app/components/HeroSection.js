@@ -5,7 +5,7 @@ export default function HeroSection() {
   return (
     <div className="min-h-screen relative bg-[#E8FAF3]" 
          style={{
-           backgroundImage: 'url("/background.png")',
+           backgroundImage: 'url("https://raw.githubusercontent.com/bikinkoding/web-event/main/public/background.png")',
            backgroundSize: 'cover',
            backgroundPosition: 'center'
          }}>
@@ -45,12 +45,12 @@ export default function HeroSection() {
             <div className="flex justify-end">
               <img
                 className="object-cover ml-8"
-                src="/hero.png"
+                src="https://raw.githubusercontent.com/bikinkoding/web-event/main/public/hero.png"
                 alt="HMSE Team"
               />
             </div>
             <div className="absolute bottom-[-8px] right-4 bg-white px-4 py-2 rounded-full shadow-lg flex items-center">
-              <img src="/Icon_check.png" alt="Check" className="w-6 h-6 mr-2" />
+              <img src="https://raw.githubusercontent.com/bikinkoding/web-event/main/public/Icon_check.png" alt="Check" className="w-6 h-6 mr-2" />
               <p className="text-sm">
                 Bergabung dalam<br />
                 komunitas aktif
