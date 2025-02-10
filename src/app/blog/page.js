@@ -2,7 +2,7 @@ import PageHeader from "../components/PageHeader";
 
 export default function Blog() {
   const blogPosts = Array(9).fill({
-    title: "Kursus Microsoft Excel dalam 7 Hari",
+    title: "Belajar Microsoft Excel dalam 7 Hari",
     category: "Excel",
     image: "https://placehold.co/600x400",
   });

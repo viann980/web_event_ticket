@@ -40,6 +40,21 @@ export default function Events() {
     // Add more events here
   ];
 
+  const getCategoryColor = (category) => {
+    switch (category.toLowerCase()) {
+      case 'workshop':
+        return 'bg-blue-100 text-blue-800';
+      case 'mentoring':
+        return 'bg-purple-100 text-purple-800';
+      case 'seminar':
+        return 'bg-pink-100 text-pink-800';
+      case 'bootcamp':
+        return 'bg-orange-100 text-orange-800';
+      default:
+        return 'bg-green-100 text-green-800';
+    }
+  };
+
   const filteredEvents = events.filter(event => 
     event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     event.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -102,7 +117,7 @@ export default function Events() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                  <span className={`${getCategoryColor(event.category)} text-xs font-medium px-2.5 py-0.5 rounded`}>
                     {event.category}
                   </span>
                 </div>
@@ -130,7 +145,7 @@ export default function Events() {
                 </div>
                 <a
                   href={`/events/${event.id}`}
-                  className="inline-block w-full bg-green-500 text-white text-center px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                  className="inline-block w-full text-white text-center px-6 py-2 rounded-lg transition-all duration-300 bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:scale-[1.02] hover:shadow-lg hover:from-green-500 hover:via-green-600 hover:to-green-700 transform hover:-translate-y-0.5"
                 >
                   Daftar Sekarang
                 </a>
