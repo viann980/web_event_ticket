@@ -1,66 +1,47 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageHeader from "../components/PageHeader";
-import { handleEventRegistration } from "../utils/whatsapp";
+import EventCard from "../components/EventCard";
+import { eventService } from "../utils/api";
+import Swal from 'sweetalert2';
 
 export default function Events() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
-  // Sample event data - replace with real data later
-  const events = [
-    {
-      id: 1,
-      title: "Workshop UI/UX Design",
-      date: "15 Feb 2025",
-      time: "09:00 - 12:00",
-      location: "Online via Zoom",
-      category: "Workshop",
-      image: "https://placehold.co/600x400",
-      price: "Rp 50.000"
-    },
-    {
-      id: 2,
-      title: "Seminar Artificial Intelligence",
-      date: "20 Feb 2025",
-      time: "13:00 - 16:00",
-      location: "Aula UNIPI",
-      category: "Seminar",
-      image: "https://placehold.co/600x400",
-      price: "Free"
-    },
-    {
-      id: 3,
-      title: "Bootcamp Web Development",
-      date: "1 Mar 2025",
-      time: "09:00 - 17:00",
-      location: "Lab Komputer UNIPI",
-      category: "Bootcamp",
-      image: "https://placehold.co/600x400",
-      price: "Rp 150.000"
-    },
-    // Add more events here
-  ];
+  useEffect(() => {
+    loadEvents();
+  }, []);
 
-  const getCategoryColor = (category) => {
-    switch (category.toLowerCase()) {
-      case 'workshop':
-        return 'bg-blue-100 text-blue-800';
-      case 'mentoring':
-        return 'bg-purple-100 text-purple-800';
-      case 'seminar':
-        return 'bg-pink-100 text-pink-800';
-      case 'bootcamp':
-        return 'bg-orange-100 text-orange-800';
-      default:
-        return 'bg-green-100 text-green-800';
+  const loadEvents = async () => {
+    try {
+      setLoading(true);
+      const response = await eventService.getAll();
+      setEvents(response.data);
+    } catch (error) {
+      console.error('Error loading events:', error);
+      setError('Failed to load events');
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to load events',
+        icon: 'error',
+        confirmButtonColor: '#f97316'
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   const filteredEvents = events.filter(event => 
-    event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.location.toLowerCase().includes(searchQuery.toLowerCase())
+    event.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.categories?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.location?.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Get unique categories from events
+  const categories = ['All', ...new Set(events.map(event => event.categories))].filter(Boolean);
 
   return (
     <div className="min-h-screen bg-white">
@@ -80,7 +61,7 @@ export default function Events() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="px-6 sm:px-12 py-3 bg-orange-400 text-white rounded-xl hover:bg-orange-500 transition-colors uppercase text-base sm:text-lg font-medium tracking-wide w-full sm:w-auto">
+            <button className="px-6 sm:px-12 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors uppercase text-base sm:text-lg font-medium tracking-wide w-full sm:w-auto">
               Cari
             </button>
           </div>
@@ -88,14 +69,14 @@ export default function Events() {
 
         {/* Filter Tags */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {["All", "Workshop", "Seminar", "Bootcamp"].map((category) => (
+          {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSearchQuery(category === "All" ? "" : category)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 (category === "All" && searchQuery === "") || 
                 searchQuery === category
-                ? "bg-green-500 text-white"
+                ? "bg-orange-500 text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -104,67 +85,48 @@ export default function Events() {
           ))}
         </div>
 
-        {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.map((event) => (
-            <div
-              key={event.id}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
-            >
-              <div className="relative h-48">
-                <img
-                  src={event.image}
-                  alt={event.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className={`${getCategoryColor(event.category)} text-xs font-medium px-2.5 py-0.5 rounded`}>
-                    {event.category}
-                  </span>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="bg-white text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded shadow">
-                    {event.price}
-                  </span>
-                </div>
+        {loading ? (
+          // Loading skeleton
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
               </div>
-              <div className="p-6">
-                <h3 className="font-semibold text-lg mb-2">{event.title}</h3>
-                <div className="space-y-2 text-sm text-gray-600 mb-4">
-                  <p className="flex items-center">
-                    <i className="fas fa-calendar-alt w-5"></i>
-                    {event.date}
-                  </p>
-                  <p className="flex items-center">
-                    <i className="fas fa-clock w-5"></i>
-                    {event.time}
-                  </p>
-                  <p className="flex items-center">
-                    <i className="fas fa-map-marker-alt w-5"></i>
-                    {event.location}
-                  </p>
-                </div>
-                <button
-                  onClick={() => handleEventRegistration(event.title)}
-                  className="inline-block w-full text-white text-center px-6 py-2 rounded-lg transition-all duration-300 bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:scale-[1.02] hover:shadow-lg hover:from-green-500 hover:via-green-600 hover:to-green-700 transform hover:-translate-y-0.5"
-                >
-                  Daftar Sekarang
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* No Results Message */}
-        {filteredEvents.length === 0 && (
+            ))}
+          </div>
+        ) : error ? (
+          // Error state
           <div className="text-center py-12">
-            <h3 className="text-xl font-medium text-gray-600">
-              Tidak ada event yang ditemukan
+            <h3 className="text-xl font-medium text-red-600">
+              {error}
             </h3>
             <p className="text-gray-500 mt-2">
-              Coba cari dengan kata kunci lain
+              Silakan coba refresh halaman
             </p>
           </div>
+        ) : (
+          <>
+            {/* Events Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+
+            {/* No Results Message */}
+            {filteredEvents.length === 0 && (
+              <div className="text-center py-12">
+                <h3 className="text-xl font-medium text-gray-600">
+                  Tidak ada event yang ditemukan
+                </h3>
+                <p className="text-gray-500 mt-2">
+                  Coba cari dengan kata kunci lain
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

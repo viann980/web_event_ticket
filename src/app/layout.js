@@ -2,12 +2,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "HMSE UNIPI",
-  description: "Himpunan Mahasiswa Software Engineering",
+  description: "Himpunan Mahasiswa Sistem Informasi Universitas Putra Indonesia",
 };
 
 export default function RootLayout({ children }) {
@@ -21,7 +22,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <Navbar />
-        {children}
+        <main className="min-h-screen">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
