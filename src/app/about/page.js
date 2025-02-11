@@ -1,7 +1,7 @@
 import PageHeader from "../components/PageHeader";
 
 export default function About() {
-  const years = ["2022", "2023", "2024", "2025"];
+  const years = ["2024", "2025"];
   const members = [
     {
       name: "Vian",

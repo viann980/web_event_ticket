@@ -19,7 +19,7 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md pt-24">
         <Link href="/" className="flex justify-center mb-6">
           <span className="text-3xl font-bold text-gray-900">Unipi HMSE.</span>
         </Link>
@@ -165,33 +165,7 @@ export default function Register() {
             </div>
           </form>
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Atau daftar dengan
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <div>
-                <button className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  <i className="fab fa-google mr-2"></i>
-                  Google
-                </button>
-              </div>
-              <div>
-                <button className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                  <i className="fab fa-github mr-2"></i>
-                  Github
-                </button>
-              </div>
-            </div>
-          </div>
+        
         </div>
       </div>
     </div>
