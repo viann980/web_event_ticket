@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import PageHeader from "../components/PageHeader";
+import { handleEventRegistration } from "../utils/whatsapp";
 
 export default function Events() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -143,12 +144,12 @@ export default function Events() {
                     {event.location}
                   </p>
                 </div>
-                <a
-                  href={`/events/${event.id}`}
+                <button
+                  onClick={() => handleEventRegistration(event.title)}
                   className="inline-block w-full text-white text-center px-6 py-2 rounded-lg transition-all duration-300 bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:scale-[1.02] hover:shadow-lg hover:from-green-500 hover:via-green-600 hover:to-green-700 transform hover:-translate-y-0.5"
                 >
                   Daftar Sekarang
-                </a>
+                </button>
               </div>
             </div>
           ))}
