@@ -51,7 +51,7 @@ export default function EventCard({ event }) {
               ? 'bg-green-100 text-green-800'
               : 'bg-orange-100 text-orange-800'
           }`}>
-            {event.price === 0 ? 'Free' : `Rp ${event.price.toLocaleString()}`}
+            {event.price === 0 ? 'Free' : `Rp ${Math.floor(event.price).toLocaleString('id-ID')}`}
           </span>
         </div>
 
