@@ -24,17 +24,31 @@ export default function UserEventsPage() {
     }
   };
 
+  // Determine badge color based on status
   const getStatusBadgeColor = (status) => {
-    switch (status) {
-      case 'completed':
-        return 'bg-green-100 text-green-800';
+    switch (status.toLowerCase()) {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
+      case 'approved':
+      case 'paid':
+      case 'completed':
+        return 'bg-green-100 text-green-800';
+      case 'rejected':
       case 'cancelled':
+      case 'failed':
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
+  };
+
+  // Utility function to format status
+  const formatStatus = (status) => {
+    if (!status) return '';
+    return status
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
   };
 
   if (loading) return <div>Loading...</div>;
@@ -74,12 +88,12 @@ export default function UserEventsPage() {
               </div>
 
               <div className="mt-4 flex items-center justify-between">
-                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(event.registration_status)}`}>
-                  {event.registration_status}
+                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(formatStatus(event.registration_status))}`}>
+                  {formatStatus(event.registration_status)}
                 </span>
 
-                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(event.payment_status)}`}>
-                  {event.payment_status}
+                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadgeColor(formatStatus(event.payment_status))}`}>
+                  {formatStatus(event.payment_status)}
                 </span>
               </div>
 

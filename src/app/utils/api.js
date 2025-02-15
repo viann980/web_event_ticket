@@ -60,3 +60,22 @@ export const adminService = {
   getSalesReport: (params) => api.get('/admin/reports/sales', { params }),
   getEventReport: () => api.get('/admin/reports/events'),
 };
+
+// Blog Category services
+export const blogCategoryService = {
+  getAll: () => api.get('/blog-categories'),
+  getById: (id) => api.get(`/blog-categories/${id}`),
+  create: (data) => api.post('/blog-categories', data),
+  update: (id, data) => api.put(`/blog-categories/${id}`, data),
+  delete: (id) => api.delete(`/blog-categories/${id}`),
+};
+
+// Blog services
+export const blogService = {
+  getAll: () => api.get('/blogs'),
+  getById: (id) => api.get(`/blogs/${id}`),
+  getByCategory: (categoryId) => api.get(`/blogs/category/${categoryId}`),
+  create: (data) => api.post('/blogs', data),
+  update: (id, data) => api.put(`/blogs/${id}`, data),
+  delete: (id) => api.delete(`/blogs/${id}`),
+};

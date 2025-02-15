@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -65,18 +66,25 @@ export default function Navbar() {
 
     // Dashboard items based on role
     const dashboardItems = user.role === 'admin' ? [
+      { href: '/', label: 'Home' },
       { href: '/dashboard/admin/reports', label: 'Reports' },
-      { href: '/dashboard/events', label: 'Manage Events' },
-      { href: '/dashboard/admin/payments', label: 'Payments' },
-    ] : [
       { href: '/dashboard/events', label: 'My Events' },
-      { href: '/dashboard/payments', label: 'My Payments' },
+      { href: '/dashboard/admin/payments', label: 'Payments' },
+      {
+        label: 'Master Data',
+        type: 'dropdown',
+        items: [
+          { href: '/dashboard/master/blog-category', label: 'Blog Categories' },
+          { href: '/dashboard/master/blog', label: 'Blog Posts' }
+        ]
+      }
+    ] : [
+      { href: '/', label: 'Home' },
+      { href: '/dashboard/events', label: 'My Events' },
     ];
 
     // Return all items with a separator
     return [
-      ...baseItems,
-      { type: 'separator' }, // This will be rendered as a separator
       ...dashboardItems
     ];
   };
@@ -124,6 +132,43 @@ export default function Navbar() {
                       {privateMenuItems.map((item, index) => (
                         item.type === 'separator' ? (
                           <span key={`separator-${index}`} className="text-gray-300">|</span>
+                        ) : item.type === 'dropdown' ? (
+                          <div key={`dropdown-${index}`} className="relative">
+                            <button
+                              onClick={() => setDropdownOpen(dropdownOpen === index ? null : index)}
+                              className={`flex items-center space-x-1 transition-colors text-gray-800 hover:text-gray-900`}
+                            >
+                              <span>{item.label}</span>
+                              <svg
+                                className={`w-4 h-4 transition-transform ${dropdownOpen === index ? 'transform rotate-180' : ''}`}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+                            {dropdownOpen === index && (
+                              <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <div className="py-1" role="menu" aria-orientation="vertical">
+                                  {item.items.map((subItem, subIndex) => (
+                                    <Link
+                                      key={subItem.href}
+                                      href={subItem.href}
+                                      className={`block px-4 py-2 text-sm ${
+                                        isActive(subItem.href)
+                                          ? 'bg-orange-100 text-orange-400'
+                                          : 'text-gray-700 hover:bg-gray-100'
+                                      }`}
+                                      onClick={() => setDropdownOpen(null)}
+                                    >
+                                      {subItem.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         ) : (
                           <Link
                             key={item.href}
