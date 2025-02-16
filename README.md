@@ -33,6 +33,9 @@ git clone https://github.com/bikinkoding/web-event.git
 ```bash
 cd web-event
 git checkout bootcamp
+
+# buka vscode
+code .
 ```
 
 4. Install semua dependencies yang diperlukan:
