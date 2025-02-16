@@ -26,13 +26,11 @@ Sebelum menjalankan aplikasi ini, pastikan komputer Anda telah memiliki:
 
 2. Clone repository ini dengan perintah:
 ```bash
-git clone https://github.com/[username]/web_event_ticket.git
+git clone https://github.com/bikinkoding/web-event.git
 ```
 
 3. Masuk ke direktori project:
 ```bash
-cd web_event_ticket
-git clone https://github.com/bikinkoding/web-event.git
 cd web-event
 git checkout bootcamp
 ```
