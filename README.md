@@ -177,4 +177,4 @@ Jika Anda ingin berkontribusi pada project ini, silakan buat pull request.
 Project ini dilisensikan di bawah Lisensi MIT - lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
 ## Kontak
-Jika Anda memiliki pertanyaan, silakan hubungi kami melalui [email/contact].
+Email: emailhendra2@gmail.com
