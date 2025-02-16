@@ -32,6 +32,9 @@ git clone https://github.com/[username]/web_event_ticket.git
 3. Masuk ke direktori project:
 ```bash
 cd web_event_ticket
+git clone https://github.com/bikinkoding/web-event.git
+cd web-event
+git checkout bootcamp
 ```
 
 4. Install semua dependencies yang diperlukan:
